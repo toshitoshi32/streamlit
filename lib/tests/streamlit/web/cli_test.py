@@ -41,6 +41,7 @@ from streamlit.runtime.credentials import Credentials
 from streamlit.web import cli
 from streamlit.web.cli import _convert_config_option_to_click_option
 from tests import testutil
+from security import safe_command
 
 
 class CliTest(unittest.TestCase):
@@ -470,8 +471,7 @@ class HTTPServerIntegrationTest(unittest.TestCase):
             )
             https_session = exit_stack.enter_context(self.get_http_session())
             proc = exit_stack.enter_context(
-                subprocess.Popen(
-                    [
+                safe_command.run(subprocess.Popen, [
                         sys.executable,
                         "-m",
                         "streamlit",

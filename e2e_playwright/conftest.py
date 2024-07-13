@@ -40,6 +40,7 @@ import pytest
 import requests
 from PIL import Image
 from pytest import FixtureRequest
+from security import safe_command
 
 if TYPE_CHECKING:
     from types import ModuleType
@@ -112,8 +113,7 @@ class AsyncSubprocess:
         # because large amounts of output can cause it to deadlock.
         self._stdout_file = TemporaryFile("w+")
         print(f"Running: {shlex.join(self.args)}")
-        self._proc = subprocess.Popen(
-            self.args,
+        self._proc = safe_command.run(subprocess.Popen, self.args,
             cwd=self.cwd,
             stdout=self._stdout_file,
             stderr=subprocess.STDOUT,
