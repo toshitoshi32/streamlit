@@ -13,8 +13,6 @@
 # limitations under the License.
 
 from __future__ import annotations
-
-import random
 from textwrap import dedent
 from typing import TYPE_CHECKING, Final, Literal, Mapping, Union, cast
 
@@ -29,6 +27,7 @@ from streamlit.runtime.scriptrunner import get_script_run_ctx
 from streamlit.string_util import is_emoji, validate_material_icon
 from streamlit.url_util import is_url
 from streamlit.util import lower_clean_dict_keys
+import secrets
 
 if TYPE_CHECKING:
     from typing_extensions import TypeGuard
@@ -263,7 +262,7 @@ def set_page_config(
 def get_random_emoji() -> str:
     # Weigh our emojis 10x, cuz we're awesome!
     # TODO: fix the random seed with a hash of the user's app code, for stability?
-    return random.choice(RANDOM_EMOJIS + 10 * ENG_EMOJIS)
+    return secrets.choice(RANDOM_EMOJIS + 10 * ENG_EMOJIS)
 
 
 def set_menu_items_proto(lowercase_menu_items, menu_items_proto) -> None:
