@@ -33,7 +33,7 @@ def create_release():
     header = {"Authorization": f"token {access_token}"}
 
     # Get the latest release tag to compare against
-    response = requests.get(f"{url}/latest", headers=header)
+    response = requests.get(f"{url}/latest", headers=header, timeout=60)
     previous_tag_name = None
     if response.status_code == 200:
         previous_tag_name = response.json()["tag_name"]
@@ -42,7 +42,7 @@ def create_release():
 
     # Generate the automated release notes
     payload = {"tag_name": tag, "previous_tag_name": previous_tag_name}
-    response = requests.post(f"{url}/generate-notes", json=payload, headers=header)
+    response = requests.post(f"{url}/generate-notes", json=payload, headers=header, timeout=60)
     body = None
     if response.status_code == 200:
         body = response.json()["body"]
@@ -51,7 +51,7 @@ def create_release():
 
     # Create the release with the generated release notes
     payload = {"tag_name": tag, "name": tag, "body": body}
-    response = requests.post(url, json=payload, headers=header)
+    response = requests.post(url, json=payload, headers=header, timeout=60)
 
     if response.status_code == 201:
         print(f"Successfully created Release {tag}")
