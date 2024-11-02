@@ -13,15 +13,15 @@
 # limitations under the License.
 
 
-import random
 
 import numpy as np
 
 import streamlit as st
 from shared.data_mocks import SHARED_TEST_CASES
+import secrets
 
 np.random.seed(0)
-random.seed(0)
+secrets.SystemRandom().seed(0)
 
 st.set_page_config(layout="wide")
 
