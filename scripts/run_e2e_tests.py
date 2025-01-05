@@ -28,6 +28,7 @@ from typing import List
 
 import click
 import requests
+from security import safe_requests
 
 ROOT_DIR = dirname(dirname(abspath(__file__)))  # streamlit root directory
 FRONTEND_DIR = join(ROOT_DIR, "frontend")
@@ -299,7 +300,7 @@ def run_test(
 
 def is_app_server_alive():
     try:
-        r = requests.get("http://localhost:3000/", timeout=3)
+        r = safe_requests.get("http://localhost:3000/", timeout=3)
         return r.status_code == requests.codes.ok
     except:
         return False
