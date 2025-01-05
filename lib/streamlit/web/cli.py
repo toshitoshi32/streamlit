@@ -30,6 +30,7 @@ from streamlit.runtime.credentials import Credentials, check_credentials
 from streamlit.web.cache_storage_manager_config import (
     create_default_cache_storage_manager,
 )
+from security import safe_requests
 
 if TYPE_CHECKING:
     from streamlit.config_option import ConfigOption
@@ -113,7 +114,7 @@ def _download_remote(main_script_path: str, url_path: str) -> None:
 
     with open(main_script_path, "wb") as fp:
         try:
-            resp = requests.get(url_path)
+            resp = safe_requests.get(url_path)
             resp.raise_for_status()
             fp.write(resp.content)
         except requests.exceptions.RequestException as e:

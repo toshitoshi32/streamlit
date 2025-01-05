@@ -18,6 +18,7 @@
 import os
 
 import requests
+from security import safe_requests
 
 
 def create_release():
@@ -33,7 +34,7 @@ def create_release():
     header = {"Authorization": f"token {access_token}"}
 
     # Get the latest release tag to compare against
-    response = requests.get(f"{url}/latest", headers=header)
+    response = safe_requests.get(f"{url}/latest", headers=header)
     previous_tag_name = None
     if response.status_code == 200:
         previous_tag_name = response.json()["tag_name"]
