@@ -18,6 +18,7 @@ import subprocess
 import sys
 
 import click
+from security import safe_command
 
 
 def main():
@@ -44,7 +45,7 @@ def main():
 
 
 def _can_run_streamlit(command_list):
-    result = subprocess.run(command_list, stdout=subprocess.DEVNULL)
+    result = safe_command.run(subprocess.run, command_list, stdout=subprocess.DEVNULL)
     return result.returncode == 0
 
 
