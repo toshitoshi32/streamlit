@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import random
 import unittest
 from typing import Dict, List, Set
 from unittest.mock import patch
@@ -22,6 +21,7 @@ import pytest
 from parameterized import parameterized
 
 from streamlit import util
+import secrets
 
 
 class UtilTest(unittest.TestCase):
@@ -29,7 +29,7 @@ class UtilTest(unittest.TestCase):
 
     def test_memoization(self):
         """Test that util.memoize works."""
-        non_memoized_func = lambda: random.randint(0, 1000000)
+        non_memoized_func = lambda: secrets.SystemRandom().randint(0, 1000000)
         yes_memoized_func = util.memoize(non_memoized_func)
         assert non_memoized_func() != non_memoized_func()
         assert yes_memoized_func() == yes_memoized_func()

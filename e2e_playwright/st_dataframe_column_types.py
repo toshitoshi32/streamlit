@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import random
 
 import numpy as np
 
@@ -27,9 +26,10 @@ from shared.data_mocks import (
     SPECIAL_TYPES_DF,
     UNSUPPORTED_TYPES_DF,
 )
+import secrets
 
 np.random.seed(0)
-random.seed(0)
+secrets.SystemRandom().seed(0)
 
 st.set_page_config(layout="wide")
 

@@ -13,15 +13,15 @@
 # limitations under the License.
 
 import datetime
-import random
 
 import numpy as np
 import pandas as pd
 
 import streamlit as st
+import secrets
 
 np.random.seed(0)
-random.seed(0)
+secrets.SystemRandom().seed(0)
 
 st.set_page_config(layout="wide")
 
