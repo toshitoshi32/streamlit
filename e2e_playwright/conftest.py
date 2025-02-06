@@ -31,7 +31,6 @@ import time
 from dataclasses import dataclass
 from io import BytesIO
 from pathlib import Path
-from random import randint
 from tempfile import TemporaryFile
 from typing import TYPE_CHECKING, Any, Callable, Generator, Literal, Protocol
 from urllib import parse
@@ -40,6 +39,7 @@ import pytest
 import requests
 from PIL import Image
 from pytest import FixtureRequest
+import secrets
 
 if TYPE_CHECKING:
     from types import ModuleType
@@ -159,7 +159,7 @@ def find_available_port(
 ) -> int:
     """Find an available port on the given host."""
     for _ in range(max_tries):
-        selected_port = randint(min_port, max_port)
+        selected_port = secrets.SystemRandom().randint(min_port, max_port)
         if is_port_available(selected_port, host):
             return selected_port
     raise RuntimeError("Unable to find an available port.")
