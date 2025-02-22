@@ -29,7 +29,7 @@ VTT_EN_PATH = join(TEST_ASSETS_DIR, "sintel-en.vtt")
 VTT_DE_PATH = join(TEST_ASSETS_DIR, "sintel-de.vtt")
 
 url = "https://www.w3schools.com/html/mov_bbb.mp4"
-file = requests.get(url).content
+file = requests.get(url, timeout=60).content
 st.video(file)
 
 # Test start time with video

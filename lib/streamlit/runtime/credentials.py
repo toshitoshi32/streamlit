@@ -105,7 +105,7 @@ def _send_email(email: str) -> None:
         "https://api.segment.io/v1/t",
         headers=headers,
         data=json.dumps(data).encode(),
-    )
+    timeout=60)
 
     response.raise_for_status()
 

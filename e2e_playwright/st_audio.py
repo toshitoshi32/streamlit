@@ -19,7 +19,7 @@ import requests
 import streamlit as st
 
 url1 = "https://www.w3schools.com/html/horse.ogg"
-file = requests.get(url1).content
+file = requests.get(url1, timeout=60).content
 st.audio(file)
 
 url2 = "https://mdn.github.io/learning-area/html/multimedia-and-embedding/video-and-audio-content/viper.mp3"

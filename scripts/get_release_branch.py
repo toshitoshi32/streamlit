@@ -30,7 +30,7 @@ def get_release_branch():
     """Retrieve the release branch from the release PR"""
 
     url = "https://api.github.com/repos/streamlit/streamlit/pulls"
-    response = requests.get(url).json()
+    response = requests.get(url, timeout=60).json()
 
     # Response is in an array, must map over each pull (dict)
     for pull in response:
