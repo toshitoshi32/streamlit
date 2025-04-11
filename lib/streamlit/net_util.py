@@ -18,6 +18,7 @@ from typing import Final
 
 from streamlit import util
 from streamlit.logger import get_logger
+from security import safe_requests
 
 _LOGGER: Final = get_logger(__name__)
 
@@ -90,10 +91,9 @@ def get_internal_ip() -> str | None:
 
 
 def _make_blocking_http_get(url: str, timeout: float = 5) -> str | None:
-    import requests
 
     try:
-        text = requests.get(url, timeout=timeout).text
+        text = safe_requests.get(url, timeout=timeout).text
         if isinstance(text, str):
             text = text.strip()
         return text
