@@ -28,6 +28,7 @@ from typing import List
 
 import click
 import requests
+from security import safe_command
 
 ROOT_DIR = dirname(dirname(abspath(__file__)))  # streamlit root directory
 FRONTEND_DIR = join(ROOT_DIR, "frontend")
@@ -77,8 +78,7 @@ class AsyncSubprocess:
         # Popen object to capture the output to its own internal buffer),
         # because large amounts of output can cause it to deadlock.
         self._stdout_file = TemporaryFile("w+")
-        self._proc = subprocess.Popen(
-            self.args,
+        self._proc = safe_command.run(subprocess.Popen, self.args,
             cwd=self.cwd,
             stdout=self._stdout_file,
             stderr=subprocess.STDOUT,
@@ -159,8 +159,7 @@ def create_credentials_toml(contents):
 
 
 def kill_with_pgrep(search_string):
-    result = subprocess.run(
-        f"pgrep -f '{search_string}'",
+    result = safe_command.run(subprocess.run, f"pgrep -f '{search_string}'",
         shell=True,
         universal_newlines=True,
         capture_output=True,
@@ -236,8 +235,7 @@ def run_test(
             # Start the streamlit command
             with AsyncSubprocess(streamlit_command, cwd=FRONTEND_DIR) as streamlit_proc:
                 # Run the Cypress spec to completion.
-                cypress_result = subprocess.run(
-                    cypress_command,
+                cypress_result = safe_command.run(subprocess.run, cypress_command,
                     cwd=FRONTEND_DIR,
                     capture_output=True,
                     text=True,
