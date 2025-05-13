@@ -15,7 +15,6 @@
 """Unit tests for st.image and other image.py utility code."""
 
 import io
-import random
 from unittest import mock
 
 import cv2
@@ -36,6 +35,7 @@ from streamlit.runtime.memory_media_file_storage import (
 )
 from streamlit.web.server.server import MEDIA_ENDPOINT
 from tests.delta_generator_test_case import DeltaGeneratorTestCase
+import secrets
 
 
 def create_image(size, format="RGB", add_alpha=True):
@@ -88,12 +88,12 @@ def create_gif(size):
     images = []
 
     # Make ten frames with the circle of a random size and location
-    random.seed(0)
+    secrets.SystemRandom().seed(0)
     for i in range(0, 10):
         frame = im.copy()
         draw = ImageDraw.Draw(frame)
-        pos = (random.randrange(0, size), random.randrange(0, size))
-        circle_size = random.randrange(10, int(size / 2))
+        pos = (secrets.SystemRandom().randrange(0, size), secrets.SystemRandom().randrange(0, size))
+        circle_size = secrets.SystemRandom().randrange(10, int(size / 2))
         draw.ellipse([pos, tuple(p + circle_size for p in pos)], "black")
         images.append(frame.copy())
 

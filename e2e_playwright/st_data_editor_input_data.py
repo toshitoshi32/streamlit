@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import random
 
 import numpy as np
 import pandas as pd
@@ -20,9 +19,10 @@ import pandas as pd
 import streamlit as st
 from shared.data_mocks import SHARED_TEST_CASES, TestCaseMetadata
 from streamlit.type_util import DataFormat
+import secrets
 
 np.random.seed(0)
-random.seed(0)
+secrets.SystemRandom().seed(0)
 
 st.set_page_config(layout="wide")
 

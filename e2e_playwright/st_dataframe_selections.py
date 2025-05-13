@@ -12,16 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import random
 import time
 
 import numpy as np
 import pandas as pd
 
 import streamlit as st
+import secrets
 
 np.random.seed(0)
-random.seed(0)
+secrets.SystemRandom().seed(0)
 
 # Generate a random dataframe
 df = pd.DataFrame(

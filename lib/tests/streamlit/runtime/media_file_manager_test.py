@@ -13,8 +13,6 @@
 # limitations under the License.
 
 """Unit tests for MediaFileManager"""
-
-import random
 import unittest
 from typing import Optional
 from unittest import TestCase, mock
@@ -28,13 +26,14 @@ from streamlit.runtime.memory_media_file_storage import (
     _calculate_file_id,
 )
 from tests.exception_capturing_thread import call_on_threads
+import secrets
 
 
 def random_coordinates():
     return "{}.{}.{}".format(
-        random.randint(1, 4),
-        (random.randint(1, 12), random.randint(1, 12)),
-        random.randint(1, 99),
+        secrets.SystemRandom().randint(1, 4),
+        (secrets.SystemRandom().randint(1, 12), secrets.SystemRandom().randint(1, 12)),
+        secrets.SystemRandom().randint(1, 99),
     )
 
 
@@ -98,7 +97,7 @@ class MediaFileManagerTest(TestCase):
         super().setUp()
         self.storage = MemoryMediaFileStorage("/mock/endpoint")
         self.media_file_manager = MediaFileManager(self.storage)
-        random.seed(1337)
+        secrets.SystemRandom().seed(1337)
 
     def _add_file_and_get_object(
         self,
@@ -380,7 +379,7 @@ class MediaFileManagerThreadingTest(unittest.TestCase):
         super().setUp()
         self.storage = MemoryMediaFileStorage("/mock/endpoint")
         self.media_file_manager = MediaFileManager(self.storage)
-        random.seed(1337)
+        secrets.SystemRandom().seed(1337)
 
     @mock.patch(
         "streamlit.runtime.media_file_manager._get_session_id",

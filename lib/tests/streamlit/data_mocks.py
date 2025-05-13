@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import random
 from datetime import date
 from typing import NamedTuple
 
@@ -26,9 +25,10 @@ from tests.streamlit.snowpandas_mocks import DataFrame as SnowpandasDataFrame
 from tests.streamlit.snowpandas_mocks import Series as SnowpandasSeries
 from tests.streamlit.snowpark_mocks import DataFrame as SnowparkDataFrame
 from tests.streamlit.snowpark_mocks import Table as SnowparkTable
+import secrets
 
 np.random.seed(0)
-random.seed(0)
+secrets.SystemRandom().seed(0)
 
 
 class TestCaseMetadata(NamedTuple):

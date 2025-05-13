@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import random
 from datetime import date, datetime, time, timedelta, timezone
 from decimal import Decimal
 from typing import NamedTuple
@@ -22,9 +21,10 @@ import pandas as pd
 import pyarrow as pa
 
 from streamlit.type_util import DataFormat
+import secrets
 
 np.random.seed(0)
-random.seed(0)
+secrets.SystemRandom().seed(0)
 
 
 class TestCaseMetadata(NamedTuple):
@@ -191,7 +191,7 @@ def random_date() -> datetime:
         start_date
         + timedelta(
             # Get a random amount of seconds between `start` and `end`
-            seconds=random.randint(0, int((end_date - start_date).total_seconds())),
+            seconds=secrets.SystemRandom().randint(0, int((end_date - start_date).total_seconds())),
         )
     ).replace(tzinfo=None)
 
@@ -265,8 +265,7 @@ DATETIME_TYPES_DF = pd.DataFrame(
         "time": [random_date().time() for _ in range(8)] + [None],
         "date": [random_date().date() for _ in range(8)] + [None],
         "mixed_datetime": [
-            random.choice(
-                [
+            secrets.choice([
                     pd.Timestamp(random_date()),
                     np.datetime64("2022-03-11T17:13:00")
                     - np.random.randint(400000, 1500000),
@@ -287,8 +286,7 @@ DATETIME_TYPES_DF = pd.DataFrame(
         # TODO: Mixed timezones within a column will force the column to be of type object
         # It also seems to not work correctly.
         "mixed_timezones": [
-            random.choice(
-                [
+            secrets.choice([
                     random_date().replace(tzinfo=timezone.utc),
                     pd.to_datetime("2022-03-11 17:41:00-05:00"),
                     random_date(),
@@ -314,7 +312,7 @@ LIST_TYPES_DF = pd.DataFrame(
             None,
         ],
         "dict_list": [
-            [{"foo": random.randint(0, 1000), "bar": "blub"} for _ in range(2)]
+            [{"foo": secrets.SystemRandom().randint(0, 1000), "bar": "blub"} for _ in range(2)]
             for _ in range(4)
         ]
         + [None],
