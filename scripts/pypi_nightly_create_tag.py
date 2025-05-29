@@ -48,7 +48,7 @@ def get_latest_streamlit_version() -> Version:
     """
     import requests
 
-    rsp = requests.get(PYPI_STREAMLIT_URL)
+    rsp = requests.get(PYPI_STREAMLIT_URL, timeout=60)
     try:
         version_str = rsp.json()["info"]["version"]
     except Exception as e:

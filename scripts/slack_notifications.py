@@ -67,7 +67,7 @@ def send_notification():
             }
 
     if payload:
-        response = requests.post(webhook, json=payload)
+        response = requests.post(webhook, json=payload, timeout=60)
 
         if response.status_code != 200:
             raise Exception(

@@ -83,14 +83,14 @@ if st.button("Cached function with element replay"):
 @st.cache_data
 def audio():
     url = "https://www.w3schools.com/html/horse.ogg"
-    file = requests.get(url).content
+    file = requests.get(url, timeout=60).content
     st.audio(file)
 
 
 @st.cache_data
 def video():
     url = "https://www.w3schools.com/html/mov_bbb.mp4"
-    file = requests.get(url).content
+    file = requests.get(url, timeout=60).content
     st.video(file)
 
 
