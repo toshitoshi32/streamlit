@@ -469,7 +469,7 @@ class HashTest(unittest.TestCase):
         with open(__file__, "r") as f:
             h1 = get_hash(f)
             self.assertEqual(h1, get_hash(f))
-            f.readline()
+            f.readline(5_000_000)
             self.assertNotEqual(h1, get_hash(f))
             f.seek(0)
             self.assertEqual(h1, get_hash(f))
