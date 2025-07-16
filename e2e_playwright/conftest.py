@@ -37,9 +37,9 @@ from typing import TYPE_CHECKING, Any, Callable, Generator, Literal, Protocol
 from urllib import parse
 
 import pytest
-import requests
 from PIL import Image
 from pytest import FixtureRequest
+from security import safe_requests
 
 if TYPE_CHECKING:
     from types import ModuleType
@@ -169,7 +169,7 @@ def is_app_server_running(port: int, host: str = "localhost") -> bool:
     """Check if the app server is running."""
     try:
         return (
-            requests.get(f"http://{host}:{port}/_stcore/health", timeout=1).text == "ok"
+            safe_requests.get(f"http://{host}:{port}/_stcore/health", timeout=1).text == "ok"
         )
     except Exception:
         return False
