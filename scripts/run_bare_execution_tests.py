@@ -31,6 +31,7 @@ from multiprocessing.pool import ThreadPool
 from typing import Set
 
 import click
+from security import safe_command
 
 # Where we expect to find the example files.
 E2E_DIR = "e2e_playwright"
@@ -75,8 +76,7 @@ def run_commands(section_header, commands):
         )
 
         # Run the command.
-        result = subprocess.call(
-            command.split(" "), stdout=subprocess.DEVNULL, stderr=None
+        result = safe_command.run(subprocess.call, command.split(" "), stdout=subprocess.DEVNULL, stderr=None
         )
         if result != 0:
             with lock:

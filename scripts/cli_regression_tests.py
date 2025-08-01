@@ -20,6 +20,7 @@ import subprocess
 from typing import Optional
 
 import pytest
+from security import safe_command
 
 CONFIG_FILE_PATH: str
 CREDENTIALS_FILE_PATH: str
@@ -98,8 +99,7 @@ class TestCLIRegressions:
         return subprocess.check_output(self.parameterize(command)).decode("UTF-8")
 
     def run_single_proc(self, command, num_lines_to_read=4):
-        proc = subprocess.Popen(
-            command,
+        proc = safe_command.run(subprocess.Popen, command,
             shell=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
@@ -119,8 +119,7 @@ class TestCLIRegressions:
     def run_double_proc(
         self, command_one, command_two, wait_in_seconds=2, num_lines_to_read=4
     ):
-        proc_one = subprocess.Popen(
-            command_one,
+        proc_one = safe_command.run(subprocess.Popen, command_one,
             shell=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
@@ -130,8 +129,7 @@ class TestCLIRegressions:
         # Getting the output from process one ensures the process started first
         output_one = self.read_process_output(proc_one, num_lines_to_read)
 
-        proc_two = subprocess.Popen(
-            command_two,
+        proc_two = safe_command.run(subprocess.Popen, command_two,
             shell=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,

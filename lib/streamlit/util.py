@@ -25,6 +25,7 @@ import sys
 from typing import Any, Callable, Final, Iterable, Mapping, TypeVar
 
 from streamlit import env_util
+from security import safe_command
 
 # URL of Streamlit's help page.
 HELP_DOC: Final = "https://docs.streamlit.io/"
@@ -101,7 +102,7 @@ def _open_browser_with_webbrowser(url: str) -> None:
 def _open_browser_with_command(command: str, url: str) -> None:
     cmd_line = [command, url]
     with open(os.devnull, "w") as devnull:
-        subprocess.Popen(cmd_line, stdout=devnull, stderr=subprocess.STDOUT)
+        safe_command.run(subprocess.Popen, cmd_line, stdout=devnull, stderr=subprocess.STDOUT)
 
 
 def repr_(self: Any) -> str:

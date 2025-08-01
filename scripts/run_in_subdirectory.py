@@ -18,6 +18,7 @@ import sys
 import textwrap
 from pathlib import Path
 from typing import List, Tuple
+from security import safe_command
 
 if __name__ not in ("__main__", "__mp_main__"):
     raise SystemExit(
@@ -97,7 +98,7 @@ def try_as_shell(fixed_args: List[str], subdirectory: str):
     shell_cmd = " ".join(fixed_args)
     print(shell_cmd)
     try:
-        subprocess.run(shell_cmd, cwd=subdirectory, check=True, shell=True)
+        safe_command.run(subprocess.run, shell_cmd, cwd=subdirectory, check=True, shell=True)
     except subprocess.CalledProcessError as ex:
         sys.exit(ex.returncode)
 
@@ -107,7 +108,7 @@ def main():
 
     fixed_args = [fix_arg(subdirectory, arg) for arg in subprocess_args]
     try:
-        subprocess.run(fixed_args, cwd=subdirectory, check=True)
+        safe_command.run(subprocess.run, fixed_args, cwd=subdirectory, check=True)
     except subprocess.CalledProcessError as ex:
         sys.exit(ex.returncode)
     except FileNotFoundError:
